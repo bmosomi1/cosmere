@@ -1,0 +1,153 @@
+{% extends 'layouts/new_base.html' %}
+
+{% block additional_meta %}
+
+{% endblock %}
+
+{% block additional_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h5>Campaigns > Schedule SMS To Contacts Database</h5>
+            <hr>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-dismissible {% if message.tags == error %} alert-danger {% else %} alert-primary {% endif %}">
+                        <button class="close" type="button" data-dismiss="alert">×</button><strong>Oh snap!</strong><a class="alert-link" href="#">{{ message }}</a>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8"></div>
+                <div class="col-lg-8">
+           <div class="bs-component">
+           <div class="card" style="-webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 10%); box-shadow: 0 1px 2px rgb(0 0 0 / 10%);">
+               <div class="card-header">
+                   <h6>Send SMS To Contacts Database</h6>
+               </div>
+
+               <div class="card-body">
+                   <form method="post" action="{% url 'scheduled_sms:schedule_sms' %}" enctype="multipart/form-data">
+                       {% csrf_token %}
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p>Ensure each parameter eg. [name] added is preceded and succeeded by a space e.g Hello [name] how are you.</p>
+                            </div>
+                        </div>
+                       <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group contact-forms" id="one_group">
+                                    <label>Select Group</label>
+                                    <select class="form-control" id="group" name="group" required>
+                                         <option selected disabled>Select Group</option>
+                                        {% for group in groups %}
+                                            <option value="{{ group.id }}">{{ group.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Schedule date</label>
+                                    <input type="datetime-local" class="form-control" name="scheduled_time" required>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-group contact-forms">
+                                        <label for="Message">Message</label>
+                                        <textarea id="Message" required="" oninput="computeMessageCost()" name="Message" class="form-control contact-forms" rows="10" maxlength="765"></textarea>
+                                    </div>
+                                </div>
+
+                                <strong>Personalize message with</strong><br>
+                                <a class="btn btn-primary" onclick="setupTags_buttons('Name')" style="color: white">Name</a><br>
+                                <span><strong id="charCount">0</strong> Characters <span id="partCount">1</span> of 5 messages (Cost = <strong id="creditCount">1</strong> SMS)</span>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Sample Merged</button>
+                                </div>
+                            </div>
+
+{#                            <div class="col-sm-6">#}
+{#                                #}
+{#                            </div>#}
+                        </div>
+                   </form>
+               </div>
+           </div>
+           </div>
+       </div>
+            </div>
+{% endblock %}
+
+{% block additional_scripts %}
+    <script>
+        $(document).ready(function() {
+            $('#group').select2({
+                'theme': 'classic',
+            });
+        });
+    </script>
+<script>
+    var messageSize = 160;
+    var longMessageSize = 153;
+    var maxMessageLength = 153 * 5;
+    var creditPerPart = 1.0;
+
+    function computeMessageCost() {
+        var charCountField = $('#charCount');
+        var partCountField = $('#partCount');
+        var creditCountField = $('#creditCount');
+        var contentField = $('textarea#Message');
+        var len = contentField.val().length;
+        
+        //get newline count and add the extra characters to the length
+        var ncount = contentField.val().split('\n').length - 1;
+        if (ncount > 0) len += ncount;
+        var parts = len <= messageSize ? 1 : Math.ceil(len / longMessageSize);
+        charCountField.text(len);
+        partCountField.text(parts);
+        creditCountField.text(parts * creditPerPart);
+    }
+
+    function setupTags_buttons(tag) {
+        {#console.log(tag);#}
+        var messageField = $('textarea#Message');
+        var element = messageField.get(0);
+        var input = ' [' + (tag).trim() + '] ';
+        console.log(tag);
+        console.log(input);
+        var caretPosition = getCaret(element);
+        var text = messageField.val();
+        var p1 = text.substring(0, caretPosition);
+        var p2 = text.substring(caretPosition);
+        messageField.val(p1 + input + p2);
+        messageField.focus();
+    }
+
+
+    function getCaret(el) {
+        if (el.selectionStart) {
+            return el.selectionStart;
+        }
+        else if (document.selection) {
+            el.focus();
+            var r = document.selection.createRange();
+            if (r == null) {
+                return 0;
+            }
+            var re = el.createTextRange(),
+                rc = re.duplicate();
+            re.moveToBookmark(r.getBookmark());
+            rc.setEndPoint('EndToStart', re);
+            return rc.text.length;
+        }
+        return 0;
+    }
+</script>
+{% endblock %}

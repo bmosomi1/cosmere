@@ -1,0 +1,176 @@
+{% extends 'layouts/new_base.html' %}
+
+{% block additional_meta %}
+
+{% endblock %}
+
+{% block additional_styles %}
+
+{% endblock %}
+
+{% block content %}
+     <div class="row">
+        <div class="col-sm-12">
+            <h3>Personalized Messages</h3>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card" style="-webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 10%); box-shadow: 0 1px 2px rgb(0 0 0 / 10%);">
+                <div class="card-header">
+                    <h6>Send SMS To Contacts Database</h6>
+                </div>
+
+                <div class="card-body">
+                    <form method="post" action="{% url 'sms:personalized_contacts' %}"
+                          enctype="multipart/form-data">
+                        {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p class="text-danger">Ensure each parameter eg. [name] added is preceded and succeeded by a space
+                                        e.g Hello [name] how are you.</p>
+                            <hr>
+                        </div>
+                    </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="form-group contact-forms">
+                                        <label for="Message">Message</label>
+                                        <textarea id="Message" required="" oninput="computeMessageCost()"
+                                                  name="Message" class="form-control contact-forms" rows="6"
+                                                  maxlength="765"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <strong>Personalize message with</strong><br>
+                                    <a class="btn btn-outline-success" onclick="setupTags_buttons('Name')">Name</a><br>
+                                    <span><strong id="charCount">0</strong> Characters <span id="partCount">1</span> of 5 messages (Cost = <strong
+                                    id="creditCount">1</strong> SMS)</span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Select Group</label>
+                                    <div class="animated-checkbox">
+                                        <label>
+                                            <input type="checkbox" value="all_groups" id="all_groups"
+                                                   onclick="hide_unhide()" name="all_groups"><span
+                                                class="label-text">Send To All Groups</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group contact-forms" id="one_group">
+                                    <label>Select Group</label>
+                                    <select class="form-control" id="group" name="group" required>
+                                        <option selected disabled>Select Group</option>
+                                        {% for group in groups %}
+                                            <option value="{{ group.id }}">{{ group.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block additional_scripts %}
+    <script>
+        $(document).ready(function () {
+            $('#group').select2({
+                'theme': 'classic',
+            });
+        });
+    </script>
+    <script>
+        var messageSize = 160;
+        var longMessageSize = 153;
+        var maxMessageLength = 153 * 5;
+        var creditPerPart = 1.0;
+
+        function computeMessageCost() {
+            var charCountField = $('#charCount');
+            var partCountField = $('#partCount');
+            var creditCountField = $('#creditCount');
+            var contentField = $('textarea#Message');
+            var len = contentField.val().length;
+
+            //get newline count and add the extra characters to the length
+            var ncount = contentField.val().split('\n').length - 1;
+            if (ncount > 0) len += ncount;
+            var parts = len <= messageSize ? 1 : Math.ceil(len / longMessageSize);
+            charCountField.text(len);
+            partCountField.text(parts);
+            creditCountField.text(parts * creditPerPart);
+        }
+
+        function setupTags_buttons(tag) {
+            {#console.log(tag);#}
+            var messageField = $('textarea#Message');
+            var element = messageField.get(0);
+            var input = ' [' + (tag).trim() + '] ';
+            console.log(tag);
+            console.log(input);
+            var caretPosition = getCaret(element);
+            var text = messageField.val();
+            var p1 = text.substring(0, caretPosition);
+            var p2 = text.substring(caretPosition);
+            messageField.val(p1 + input + p2);
+            messageField.focus();
+        }
+
+
+        function getCaret(el) {
+            if (el.selectionStart) {
+                return el.selectionStart;
+            } else if (document.selection) {
+                el.focus();
+                var r = document.selection.createRange();
+                if (r == null) {
+                    return 0;
+                }
+                var re = el.createTextRange(),
+                    rc = re.duplicate();
+                re.moveToBookmark(r.getBookmark());
+                rc.setEndPoint('EndToStart', re);
+                return rc.text.length;
+            }
+            return 0;
+        }
+    </script>
+    <script>
+        function hide_unhide() {
+            if (document.getElementById('one_group').hidden === true) {
+                document.getElementById('one_group').hidden = false
+                $("#group").prop('required', true);
+                $("#all_groups").prop('required', false);
+            } else {
+                document.getElementById('one_group').hidden = true;
+                $("#group").prop('required', false);
+                $("#all_groups").prop('required', true);
+            }
+
+        }
+
+        function setRequired() {
+
+
+        }
+    </script>
+{% endblock %}

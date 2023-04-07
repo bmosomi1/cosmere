@@ -1,0 +1,75 @@
+{% extends 'layouts/new_base.html' %}
+
+{% block additional_meta %}
+
+{% endblock %}
+
+{% block additional_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h5>Campaigns > Schedule Messages To Send On A Monthly Basis</h5>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+                <div class="col-lg-12">
+                    <div class="bs-component">
+                        <div class="card" style="-webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 10%); box-shadow: 0 1px 2px rgb(0 0 0 / 10%);">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h6>Send Message To Contact</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <a class="btn btn-sm btn-primary pull-right" href="{% url 'scheduled_sms:schedule_per_month' %}">Schedule Message</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="tile-body table-responsive">
+                                    <table class="table table-hover table-bordered" id="sampleTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Message</th>
+                                                <th>Phone Number</th>
+                                                <th>Sender Name</th>
+                                                <th>Send On(Day of month)</th>
+                                                <th>Active ??</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for message in text_messages %}
+                                                <tr>
+                                                    <td>{{ message.text_message }}</td>
+                                                    <td>{{ message.phone_number }}</td>
+                                                    <td>{{ message.sender_name }}</td>
+                                                    <td>{{ message.send_on }}</td>
+                                                    <td>{% if message.is_active %} Active {% else %} De-Actived {% endif %}</td>
+                                                    <td>
+                                                        {% if message.is_active %}
+                                                            <a href="{% url 'scheduled_sms:deactivate_scheduled_per_month' message.id %}" class="btn btn-sm btn-danger">De-Activate</a>
+                                                        {% else %}
+                                                            <a href="{% url 'scheduled_sms:deactivate_scheduled_per_month' message.id %}" class="btn btn-sm btn-primary">Activate</a>
+                                                        {% endif %}
+                                                        <a href="{% url 'scheduled_sms:edit_schedule_per_month' message.id %}" class="btn btn-sm btn-warning">Edit</a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+{% endblock %}

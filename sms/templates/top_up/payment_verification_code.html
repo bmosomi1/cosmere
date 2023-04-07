@@ -1,0 +1,62 @@
+{% extends 'layouts/new_base.html' %}
+{% load static %}
+
+{% block additional_meta %}
+
+{% endblock %}
+
+{% block additional_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <h4 class="text-success">Payment Verification</h4>
+    <hr>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="tile">
+
+                <div class="tile-body">
+                    <h4>Use verification code</h4>
+                    <hr>
+                    <div class="col-sm-6">
+                        <form method="post" action="{% url 'sms:verify_payment' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="control-label" for="verification_code">Verification Code</label>
+                                <input class="form-control" id="verification_code" name="verification_code" type="text">
+                            </div>
+
+                            <button class="btn btn-primary" type="submit">Verify</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+{#            <div class="col-sm-6">#}
+            <div class="tile">
+                <div class="tile-body">
+                    <h4>Use phone number (For new users)</h4>
+                    <small class="text-danger">Phone number should start with 254</small>
+                    <small class="text-danger">e.g 25412345678</small>
+                    <hr>
+                    <form method="post" action="{% url 'sms:phone_verify_payment' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="control-label" for="verification_code">Phone Number</label>
+                            <input class="form-control" id="verification_code" name="verification_code" type="text">
+                        </div>
+
+                        <button class="btn btn-primary" type="submit">Verify</button>
+                    </form>
+                </div>
+            </div>
+{#            </div>#}
+        </div>
+    </div>
+{% endblock %}
+
+{% block additional_scripts %}
+
+{% endblock %}

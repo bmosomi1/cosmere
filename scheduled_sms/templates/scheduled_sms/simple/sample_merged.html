@@ -1,0 +1,66 @@
+{% extends 'layouts/new_base.html'%}
+{% load static %}
+
+{% block additional_styles %}
+    <style>
+    table_outer{ height: 5em; overflow: auto; }
+    </style>
+{% endblock %}
+
+{% block content%}
+    <div class="row">
+    <div class="col-sm-12">
+        <h5>Schedule Simple SMS</h5>
+        <hr>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-dismissible {% if message.tags == error %} alert-danger {% else %} alert-primary {% endif %}">
+                    <button class="close" type="button" data-dismiss="alert">×</button><strong>Oh snap!</strong><a class="alert-link" href="#">{{ message }}</a>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    </div>
+
+
+    <div class="row">
+          <div class="col-sm-12">
+          <div class="card">
+          <div class="card-header">
+              <h5>Simple SMS merged sample</h5>
+          </div>
+              <div class="card-body">
+                  <table class="table table-hover table-bordered" >
+              <thead>
+              <tr>
+                  <th>Phone Number</th>
+                  <th>Message</th>
+              </tr>
+              </thead>
+                  <tbody>
+                  {% for a, b in data.items %}
+                      {% if forloop.counter < 3 %}
+                          <tr>
+                              <td><label>{{ a }}</label></td>
+                              <td><p>{{ b }}</p></td>
+                          </tr>
+                      {% endif %}
+                      {% endfor %}
+              </table>
+              <div class="row">
+                  <div class="col-sm-12">
+                      <form action="{% url 'scheduled_sms:simple_send' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Confirm</button>
+        </form>
+                  </div>
+              </div>
+              </div>
+          </div>
+          </div>
+</div>
+{% endblock %}
+
+{% block additional_scripts %}
+
+{% endblock %}

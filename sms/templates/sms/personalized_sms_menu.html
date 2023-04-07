@@ -1,0 +1,57 @@
+{% extends 'layouts/new_base.html' %}
+{% load static %}
+
+{% block additional_styles %}
+    {#<link rel="stylesheet" href="{% static 'css/custom.css' %}">#}
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Personalized Messages</h3>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="bs-component">
+                <div class="card" style="-webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 10%); box-shadow: 0 1px 2px rgb(0 0 0 / 10%);">
+                    <div class="card-header">
+                        <h5 class="mb-3" id="buttons">Send Personalized Message To Existing Contact Group</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Send personalized message to clients stored in your contact <br>
+                            groups</p>
+                        <a class="btn btn-sm btn btn-primary" style="color: white" href="{% url 'sms:personalized_contacts' %}">Continue</a>
+                        <br>
+                        <small>Dont have contacts, Click<a href="{% url 'sms:customer_contacts' %}"> Here</a> to
+                            add</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card" style="-webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 10%); box-shadow: 0 1px 2px rgb(0 0 0 / 10%);">
+                <div class="bs-component">
+                    <div class="card-header">
+                        <h5 class="mb-3" id="buttons">Send Personalized SMS from a File</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Already storing information on your customers? Upload this information from an Excel or CSV
+                            file and send personalised messages unique to each recipient.</p>
+                        <br>
+                        <a class="btn btn-sm btn btn-primary" style="color: white" href="{% url 'sms:import_csv' %}">Continue</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block additional_scripts %}
+
+{% endblock %}

@@ -1,0 +1,149 @@
+{% extends 'layouts/new_base.html' %}
+
+{% block additional_meta %}
+
+{% endblock %}
+
+{% block additional_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+    <div class="col-sm-12">
+        <h5>Campaigns > Schedule Message To A Contact </h5>
+        <hr>
+    </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+           <div class="bs-component">
+           <div class="card" style="-webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 10%); box-shadow: 0 1px 2px rgb(0 0 0 / 10%);">
+               <div class="card-header">
+                   <h6>Edit Scheduled Message </h6>
+               </div>
+
+               <div class="card-body">
+                   <form method="post" action="{% url 'scheduled_sms:edit_schedule_per_month' scheduled_message.id %}" enctype="multipart/form-data">
+                       {% csrf_token %}
+
+                       <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label>Sender Name</label>
+                                        <input type="text" readonly  class="form-control" name="sender_name" value="{{ scheduled_message.sender_name }}">
+                                    </div>
+                                    <div class="form-group contact-forms">
+                                        <label for="Message">Message</label>
+                                        <textarea id="Message" required="" oninput="computeMessageCost()" name="text_message" class="form-control contact-forms" rows="5" maxlength="765">{{ scheduled_message.text_message }}</textarea>
+                                    </div>
+                                </div>
+
+                                <span><strong id="charCount">0</strong> Characters <span id="partCount">1</span> of 5 messages (Cost = <strong id="creditCount">1</strong> SMS)</span><br>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group" hidden>
+                                    <label>Customer</label>
+                                    <input type="number" name="customer" value="{{ scheduled_message.customer_id }}">
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input type="text" name="phone_number" class="form-control" value="{{ scheduled_message.phone_number }}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Day of the month</label>
+                                    <input type="number"  class="form-control" id="send_on" value="{{ scheduled_message.send_on }}" name="send_on" min="1" max="28" required>
+                                </div>
+                            </div>
+                        </div>
+                       <button type="submit" class="btn btn-primary pull-right">Update</button>
+                   </form>
+               </div>
+           </div>
+           </div>
+       </div>
+            </div>
+{% endblock %}
+
+{% block additional_scripts %}
+    <script>
+        document.getElementById('send_on').oninput = function () {
+            let max = parseInt(this.max);
+            let min = parseInt(this.min);
+
+            if (parseInt(this.value) > max) {
+                this.value = max;
+            }
+            if (parseInt(this.value) < min) {
+                this.value = min;
+            }
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#group').select2({
+                'theme': 'classic',
+            });
+        });
+    </script>
+<script>
+    var messageSize = 160;
+    var longMessageSize = 153;
+    var maxMessageLength = 153 * 5;
+    var creditPerPart = 1.0;
+
+    function computeMessageCost() {
+        var charCountField = $('#charCount');
+        var partCountField = $('#partCount');
+        var creditCountField = $('#creditCount');
+        var contentField = $('textarea#Message');
+        var len = contentField.val().length;
+        
+        //get newline count and add the extra characters to the length
+        var ncount = contentField.val().split('\n').length - 1;
+        if (ncount > 0) len += ncount;
+        var parts = len <= messageSize ? 1 : Math.ceil(len / longMessageSize);
+        charCountField.text(len);
+        partCountField.text(parts);
+        creditCountField.text(parts * creditPerPart);
+    }
+
+    function setupTags_buttons(tag) {
+        {#console.log(tag);#}
+        var messageField = $('textarea#Message');
+        var element = messageField.get(0);
+        var input = ' [' + (tag).trim() + '] ';
+        console.log(tag);
+        console.log(input);
+        var caretPosition = getCaret(element);
+        var text = messageField.val();
+        var p1 = text.substring(0, caretPosition);
+        var p2 = text.substring(caretPosition);
+        messageField.val(p1 + input + p2);
+        messageField.focus();
+    }
+
+
+    function getCaret(el) {
+        if (el.selectionStart) {
+            return el.selectionStart;
+        }
+        else if (document.selection) {
+            el.focus();
+            var r = document.selection.createRange();
+            if (r == null) {
+                return 0;
+            }
+            var re = el.createTextRange(),
+                rc = re.duplicate();
+            re.moveToBookmark(r.getBookmark());
+            rc.setEndPoint('EndToStart', re);
+            return rc.text.length;
+        }
+        return 0;
+    }
+</script>
+{% endblock %}

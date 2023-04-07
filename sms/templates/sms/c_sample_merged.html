@@ -1,0 +1,69 @@
+{% extends 'layouts/new_base.html' %}
+{% load static %}
+
+{% block additional_meta %}
+
+{% endblock %}
+
+{% block additional_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+    <div class="col-sm-12">
+        <h3>Personalized Messages</h3>
+        <hr>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-sm-12">
+    <div class="card" style="-webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 10%); box-shadow: 0 1px 2px rgb(0 0 0 / 10%);">
+        <div class="card-header">
+            <h5>Sample of merged messages</h5>
+        </div>
+
+        <div class="card-body">
+            <table class="table table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th>Phone Number</th>
+                    <th>Message</th>
+                </tr>
+                </thead>
+                <tbody>
+{#                <p>{{ message }}</p>#}
+                {% for a, b in merged_sample_data.items %}
+                    {% if forloop.counter < 3 %}
+                <tr>
+                    <td>{{ a }}</td>
+                    <td>{{ b }}</td>
+                </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <form action="{% url 'sms:c_sample_merged' %}" method="post">
+                {% csrf_token %}
+                <div hidden>
+                    <input type="text" name="group" value="{{ group }}">
+                    <input type="text" name="message" value="{{ message }}">
+                </div>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+
+
+            </form>
+        </div>
+    </div>
+
+    <div>
+    </div>
+    </div>
+    </div>
+
+{% endblock %}
+
+{% block additional_scripts %}
+
+{% endblock %}

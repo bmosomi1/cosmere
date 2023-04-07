@@ -1,0 +1,89 @@
+{% extends 'layouts/new_base.html' %}
+
+{% block additional_meta %}
+
+{% endblock %}
+
+{% block additional_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="col-sm-12">
+        <div class="tile">
+            <div class="tile-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h5>Campaigns > Scheduled Messages</h5>
+                        <hr>
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-dismissible {% if message.tags == error %} alert-danger {% else %} alert-primary {% endif %}">
+                                    <button class="close" type="button" data-dismiss="alert">×</button><strong>Oh snap!</strong><a class="alert-link" href="#">{{ message }}</a>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-sm-6">
+{#                        <a class="btn btn-sm btn-outline-success pull-right" href="{% url 'scheduled_sms:schedule_sms' %}">Schedule Message</a>#}
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="bs-component">
+                        <div class="card border-success">
+                            <div class="card-header">
+                                <h6>Scheduled Messages</h6>
+                            </div>
+                            
+                            <div class="card-body">
+
+                                <div class="tile-body table-responsive">
+                                    <table class="table table-hover table-bordered" id="sampleTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Message</th>
+                                                <th>Group</th>
+                                                <th>Sender Name</th>
+                                                <th>Schedule Time</th>
+                                                <th>Sent ??</th>
+                                                <th>Active ??</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for message in text_messages %}
+                                                <tr>
+                                                    <td>{{ message.text_message }}</td>
+                                                    <td>{{ message.group.name }}</td>
+                                                    <td>{{ message.sender_name }}</td>
+                                                    <td>{{ message.scheduled_time }}</td>
+                                                    <td>{% if message.is_sent %} Sent {% else %} Pending {% endif %}</td>
+                                                    <td>{% if message.active %} Active {% else %} De-Actived {% endif %}</td>
+                                                    <td>
+{#                                                        {% if not message.is_sent %}#}
+{#                                                            {% if message.active %} #}
+{#                                                                <a href="" class="btn btn-sm btn-outline-warning">De-Activate</a> #}
+{#                                                            {% else %} #}
+{#                                                                <a href="" class="btn btn-sm btn-outline-info">Activate</a> #}
+{#                                                            {% endif %}#}
+{#                                                        {% endif %}#}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'layouts/new_base.html' %}
+
+{% block additional_styles %}
+
+{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="col-sm-12">
+
+            <p> For Custom plan Kindly call Ronald <strong><i class="fa fa-phone"></i> 0725029795</strong></p>
+            <h2> <strong> You can now get an invoice and ETR receipts for all your topups. </strong></h2>
+</div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="container">
+            <div class="well">
+                <section id="pricing">
+                    <div class="container">
+                        <div class="divider">
+                        </div><!--/.center-->
+                        <div class="gap"></div>
+
+                    </div>
+                </section><!--/#pricing-->
+                <h2> Mpesa Payment</h2>
+                <hr>
+            </div>
+            <div class="well">
+                <div class="mpesa darkerBackground">
+                    <div class="instruction">
+                        <ol>
+                            <li>Go to M-Pesa on your mobile phone</li>
+                            <li>Select Lipa na Mpesa</li>
+                            <li>Select Buy Good and services</li>
+                            <li>Enter Till number: <strong>9644609</strong></li>
+
+                            <li>Enter the total<strong> amount </strong></li>
+                            <li>Complete your transaction on your phone.</li>
+                            <li>Wait for your confirmation SMS from M-Pesa.</li>
+                            <li>Wait for your confirmation SMS from Roberms with code.</li>
+                            <li>Then click on the validate payment button below and enter code</li>
+                            <li style="color: darkgreen">
+                                <strong>NB: Incase you do not get the verification code as indicated above, click on
+                                    the validate payment button below and on the "Use phone number option", enter the phone number used to make the
+                                    payment, then click the Verify button below it.
+                                </strong>
+                            </li>
+                        </ol>
+                    </div>
+{#                    <div class="confirm darkerBackground">#}
+
+{#                    </div>#}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="container">
+            <div class="well">
+{#                <h2>Lipa Na M-PESA Online (STK-PUSH)</h2>#}
+{#                <hr>#}
+{#                <form action="{% url 'sms:lipa_na_mpesa_online' %}" method="post">#}
+{#                    {% csrf_token %}#}
+{#                    <div class="form-group">#}
+{#                        <label>Amount (KES)</label>#}
+{#                        <input type="number" name="amount" class="form-control" required>#}
+{#                    </div>#}
+{##}
+{#                    <div class="form-group">#}
+{#                        <label>Phone Number</label>#}
+{#                        <input type="text" name="phone_number" class="form-control" placeholder="254111234567" required>#}
+{#                        <small class="text-danger">Enter your phone number starting with 254</small>#}
+{#                    </div>#}
+{##}
+{#                    <div class="form-group">#}
+{#                        <button type="submit" class="btn btn-primary">Initiate</button>#}
+{#                    </div>#}
+{#                </form>#}
+            </div>
+        </div>
+    </div>
+</div>
+    <hr>
+    <div class="row">
+    <div class="col-sm-12">
+        <div class="container">
+            <div class="well">
+                <a style = "float: right" class="btn btn-primary verify-button" data-disable-with="Verifying" href="{% url 'sms:verify_payment' %}">Validate Payment</a>
+            </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}
+
+{% block additional_scripts %}
+
+{% endblock %}

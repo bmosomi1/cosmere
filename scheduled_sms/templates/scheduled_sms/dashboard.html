@@ -1,0 +1,118 @@
+{% extends 'layouts/new_base.html' %}
+
+{% block additional_meta %}
+
+{% endblock %}
+
+{% block additional_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h5>Campaigns > Schedule Message</h5>
+            <hr>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-dismissible {% if message.tags == error %} alert-danger {% else %} alert-primary {% endif %}">
+                        <button class="close" type="button" data-dismiss="alert">×</button><strong>Oh snap!</strong><a class="alert-link" href="#">{{ message }}</a>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="col-sm-6">
+            {#                        <a class="btn btn-sm btn-outline-success pull-right" href="{% url 'scheduled_sms:schedule_sms' %}">Schedule Message</a>#}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="bs-component">
+                <div class="card"
+                     style="-webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 10%); box-shadow: 0 1px 2px rgb(0 0 0 / 10%);">
+                    <div class="card-header">
+                        <h6>Schedule Message To Contact Database</h6>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="tile-body table-responsive">
+                            <p>Schedule a message to be sent out later to a select group of contacts on a
+                                specified date and time.</p>
+                            <a href="{% url 'scheduled_sms:schedule_sms' %}"
+                               class="btn btn-primary">Schedule Message</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="bs-component">
+                <div class="card"
+                     style="-webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 10%); box-shadow: 0 1px 2px rgb(0 0 0 / 10%);">
+                    <div class="card-header">
+                        <h6>Schedule Subscription Message</h6>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="tile-body table-responsive">
+                            <p>Schedule a message to be sent out to a contact each month on a selected day of
+                                the month.</p>
+                            <a href="{% url 'scheduled_sms:list_scheduled_per_month' %}"
+                               class="btn btn-primary">Schedule Message</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="bs-component">
+                <div class="card"
+                     style="-webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 10%); box-shadow: 0 1px 2px rgb(0 0 0 / 10%);">
+                    <div class="card-header">
+                        <h6>Schedule Simple Message</h6>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="tile-body table-responsive">
+                            <p>Schedule a message to be sent out later to a select list of contacts on a
+                                specified date and time.</p>
+                            <a href="{% url 'scheduled_sms:simple_sms' %}"
+                               class="btn btn-primary">Schedule Message</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="bs-component">
+                <div class="card"
+                     style="-webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 10%); box-shadow: 0 1px 2px rgb(0 0 0 / 10%);">
+                    <div class="card-header">
+                        <h6>Schedule Message To Contacts In Excel File</h6>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="tile-body table-responsive">
+                            <p>Schedule a message to contacts stored in an
+                                excel file.</p>
+                            <a href="{% url 'scheduled_sms:schedule_excel' %}"
+                               class="btn btn-primary">Schedule Message</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

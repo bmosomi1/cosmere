@@ -1,0 +1,313 @@
+{% extends 'r/layouts/base.html' %}
+{% load static %}
+
+{% block title %}
+    Roberms | Sign Up
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'login/css/signup-2.min.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="signup">
+      <div class="signup-body">
+        <div class="row">
+              <div class="col-sm-2">
+                  <img style="max-height: 40% !important;" class="img-responsive" src="{% static 'images/robermss.ico' %}" alt="Roberms">
+              </div>
+              <div class="col-sm-8">
+                  <h4>SIGN-UP</h4>
+              </div>
+          </div>
+      <hr>
+        <p class="signup-heading">
+          <em></em>
+        </p>
+
+        <div class="signup-form">
+            <form method="post" class="login-form" action="{% url 'sms:register' %}">
+              {% csrf_token%}
+              {% if form.username.errors %}
+                  {% for error in form.username.errors %}
+                      <li><strong>{{ error|escape }}</strong></li>
+                  {% endfor %}
+          {% endif %}
+              <div class="form-group" hidden>
+                  <label class="control-label" for="username">User Name </label>
+                  <input type="text" name="username" id="username" class="form-control" value="{{ form.email.value }}">
+              </div>
+
+          {% if form.email.errors %}
+                  {% for error in form.email.errors %}
+                      <li><strong>{{ error|escape }}</strong></li>
+                  {% endfor %}
+          {% endif %}
+        <div class="form-group">
+          <label class="control-label" for="email">Email</label>
+          <input type="email" name="email" id="email" class="form-control" value="{{ form.email.value }}" oninput="document.getElementById('username').value=this.value">
+      </div>
+
+          {% if form.phone_number.errors %}
+                  {% for error in form.phone_number.errors %}
+                      <li><strong>{{ error|escape }}</strong></li>
+                  {% endfor %}
+          {% endif %}
+        <div class="form-group">
+          <label class="control-label" for="email">Phone Number</label>
+          <input type="number" name="phone_number" id="phone_number" class="form-control" value="{{ form.phone_number.value }}">
+      </div>
+
+        <div class="form-group">
+          <label class="control-label" for="username">Password</label>
+          <input type="password" name="password1" id="username" class="form-control">
+      </div>
+
+          {% if form.password2.errors %}
+                  {% for error in form.password2.errors %}
+                      <li><strong>{{ error|escape }}</strong></li>
+                  {% endfor %}
+          {% endif %}
+        <div class="form-group">
+          <label class="control-label" for="username">Confirm Password</label>
+          <input type="password" name="password2" id="username" class="form-control">
+      </div>
+
+          <div class="form-group">
+              <p style="font-size: 16px;">
+                  Already Have An Account, Click <a href="{% url 'sms:login' %}">Here</a> To Sign In
+              </p>
+          </div>
+
+      <div class="form-group btn-container">
+            <button  type="submit" class="btn btn-primary btn-block"><i class="fa fa-sign-in fa-lg fa-fw"></i>Sign Up</button>
+          </div>
+    </form>
+{#          <form data-toggle="validator" data-groups='{"birthdate": "birth_month birth_day birth_year"}'>#}
+{#            <div class="row gutter-xs">#}
+{#              <div class="col-sm-6">#}
+{#                <div class="form-group">#}
+{#                  <label for="first-name">First name</label>#}
+{#                  <input id="first-name" class="form-control" type="text" name="first_name" spellcheck="false" data-msg-required="Please enter your first name." required>#}
+{#                </div>#}
+{#              </div>#}
+{#              <div class="col-sm-6">#}
+{#                <div class="form-group">#}
+{#                  <label for="last-name">Last name</label>#}
+{#                  <input id="last-name" class="form-control" type="text" name="last_name" spellcheck="false" data-msg-required="Please enter your last name." required>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#            <div class="row gutter-xs">#}
+{#              <div class="col-sm-12">#}
+{#                <div class="form-group">#}
+{#                  <label for="email">Email</label>#}
+{#                  <input id="email" class="form-control" type="email" name="email" spellcheck="false" autocomplete="off" data-msg-required="Please enter your email address." required>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#            <div class="row gutter-xs">#}
+{#              <div class="col-sm-12">#}
+{#                <div class="form-group">#}
+{#                  <label for="password">Password</label>#}
+{#                  <input id="password" class="form-control" type="password" name="password" minlength="6" data-msg-minlength="Password must be 6 characters or more." data-msg-required="Please enter your password." required>#}
+{#                  <small class="help-block">6-character minimum; case sensitive.</small>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#            <div class="row gutter-xs">#}
+{#              <div class="col-xs-12">#}
+{#                <div class="form-group">#}
+{#                  <label for="birth-month">Birthdate</label>#}
+{#                  <div class="row gutter-xs">#}
+{#                    <div class="col-xs-6">#}
+{#                      <div class="form-group">#}
+{#                        <select id="birth-month" class="custom-select" name="birth_month" data-msg-required="Please enter your birthday." required>#}
+{#                          <option value="" disabled="disabled" selected="selected">Month</option>#}
+{#                          <option value="01">January</option>#}
+{#                          <option value="02">February</option>#}
+{#                          <option value="03">March</option>#}
+{#                          <option value="04">April</option>#}
+{#                          <option value="05">May</option>#}
+{#                          <option value="06">June</option>#}
+{#                          <option value="07">July</option>#}
+{#                          <option value="08">August</option>#}
+{#                          <option value="09">September</option>#}
+{#                          <option value="10">October</option>#}
+{#                          <option value="11">November</option>#}
+{#                          <option value="12">December</option>#}
+{#                        </select>#}
+{#                      </div>#}
+{#                    </div>#}
+{#                    <div class="col-xs-3">#}
+{#                      <div class="form-group">#}
+{#                        <input id="birth-day" class="form-control" type="number" name="birth_day" placeholder="Day" min="1" max="31" data-msg-min="Please enter a valid day of the month." data-msg-max="Please enter a valid day of the month." data-msg-required="Please enter your birthday." required>#}
+{#                      </div>#}
+{#                    </div>#}
+{#                    <div class="col-xs-3">#}
+{#                      <div class="form-group">#}
+{#                        <input id="birth-year" class="form-control" type="number" name="birth_year" placeholder="Year" min="1900" max="2016" data-msg-min="Please enter a valid year." data-msg-max="Please enter a valid year." data-msg-required="Please enter your birthday." required>#}
+{#                      </div>#}
+{#                    </div>#}
+{#                  </div>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#            <div class="row gutter-xs">#}
+{#              <div class="col-xs-12">#}
+{#                <div class="form-group">#}
+{#                  <label for="gender">Gender</label>#}
+{#                  <select id="gender" class="custom-select" name="gender" data-msg-required="Please indicate your gender." required>#}
+{#                    <option value="" disabled="disabled" selected="selected">Select...</option>#}
+{#                    <option value="1">Male</option>#}
+{#                    <option value="2">Female</option>#}
+{#                    <option value="3">Not specified</option>#}
+{#                  </select>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#            <div class="row gutter-xs">#}
+{#              <div class="col-xs-12">#}
+{#                <div class="form-group">#}
+{#                  <label class="custom-control custom-control-primary custom-checkbox">#}
+{#                    <input id="agree" class="custom-control-input" type="checkbox" name="agree" data-msg-required="In order to use our services, you must agree to the Terms of Service." required>#}
+{#                    <span class="custom-control-indicator"></span>#}
+{#                    <small class="custom-control-label">I agree to the Elephant <a href="signup-2.html#">Terms of Service</a>.</small>#}
+{#                  </label>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#            <button class="btn btn-primary btn-block" type="submit">Sign up</button>#}
+{#          </form>#}
+        </div>
+      </div>
+      <div class="signup-footer">
+          <p style="font-size: 16px;">
+              Already have an account? <a href="{% url 'sms:login' %}">Log in</a>
+          </p>
+
+      </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
+
+{#<!DOCTYPE html>#}
+{#{% load static %}#}
+{#<html>#}
+{#  <head>#}
+{#    <meta charset="utf-8">#}
+{#    <meta http-equiv="X-UA-Compatible" content="IE=edge">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1">#}
+{#    <!-- Main CSS-->#}
+{#    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">#}
+{#    <!-- Font-icon css-->#}
+{#    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">#}
+{#      <style>#}
+{#          .login-box{#}
+{#              min-height: 600px !important;#}
+{#          }#}
+{#          body {#}
+{#              font-family: "Comic Sans MS";#}
+{#          }#}
+{#      </style>#}
+{#    <title>Account Verification</title>#}
+{#  </head>#}
+{#  <body>#}
+{#    <section class="material-half-bg">#}
+{#      <div class="cover" style="background: #005522 !important;"></div>#}
+{#    </section>#}
+{#    <section class="login-content">#}
+{#      <div class="logo">#}
+{#        <h1 style="font-family: 'Comic Sans MS' !important;">Roberms LTD</h1>#}
+{#      </div>#}
+{#      <div class="login-box" style="border-radius: 10px !important;">#}
+{##}
+{#        <form class="login-form" action="{% url 'sms:verify_account' %}" method="post">#}
+{#            {% csrf_token %}#}
+{#          <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>Verify Account</h3>#}
+{##}
+{#          <div class="form-group">#}
+{#            <label class="control-label">VERIFICATION CODE</label>#}
+{#            <input class="form-control" type="text" name="customer_code" placeholder="Verification Code">#}
+{#          </div>#}
+{##}
+{#          <div class="form-group btn-container">#}
+{#            <button  type="submit" class="btn btn-primary btn-block"><i class="fa fa-sign-in fa-lg fa-fw"></i>VERIFY</button>#}
+{#          </div>#}
+{#        </form>#}
+{##}
+{#          <form method="post" class="login-form" action="{% url 'sms:register' %}">#}
+{#              {% csrf_token%}#}
+{#              {% if form.username.errors %}#}
+{#                  {% for error in form.username.errors %}#}
+{#                      <li><strong>{{ error|escape }}</strong></li>#}
+{#                  {% endfor %}#}
+{#          {% endif %}#}
+{#      <div class="form-group">#}
+{#          <label class="control-label" for="username">User Name </label>#}
+{#          <input type="text" name="username" id="username" class="form-control">#}
+{#      </div>#}
+{##}
+{#          {% if form.email.errors %}#}
+{#                  {% for error in form.email.errors %}#}
+{#                      <li><strong>{{ error|escape }}</strong></li>#}
+{#                  {% endfor %}#}
+{#          {% endif %}#}
+{#        <div class="form-group">#}
+{#          <label class="control-label" for="email">Email</label>#}
+{#          <input type="email" name="email" id="email" class="form-control">#}
+{#      </div>#}
+{##}
+{#          {% if form.phone_number.errors %}#}
+{#                  {% for error in form.phone_number.errors %}#}
+{#                      <li><strong>{{ error|escape }}</strong></li>#}
+{#                  {% endfor %}#}
+{#          {% endif %}#}
+{#        <div class="form-group">#}
+{#          <label class="control-label" for="email">Phone Number</label>#}
+{#          <input type="number" name="phone_number" id="phone_number" class="form-control">#}
+{#      </div>#}
+{##}
+{#        <div class="form-group">#}
+{#          <label class="control-label" for="username">Password</label>#}
+{#          <input type="password" name="password1" id="username" class="form-control">#}
+{#      </div>#}
+{##}
+{#          {% if form.password2.errors %}#}
+{#                  {% for error in form.password2.errors %}#}
+{#                      <li><strong>{{ error|escape }}</strong></li>#}
+{#                  {% endfor %}#}
+{#          {% endif %}#}
+{#        <div class="form-group">#}
+{#          <label class="control-label" for="username">Confirm Password</label>#}
+{#          <input type="password" name="password2" id="username" class="form-control">#}
+{#      </div>#}
+{##}
+{#          <div class="form-group">#}
+{#              <strong>Already Have An Account, Click <a href="{% url 'sms:login' %}">Here</a> To Sign In</strong>#}
+{#          </div>#}
+{##}
+{#      <div class="form-group btn-container">#}
+{#            <button  type="submit" class="btn btn-primary btn-block"><i class="fa fa-sign-in fa-lg fa-fw"></i>Sign Up</button>#}
+{#          </div>#}
+{#    </form>#}
+{##}
+{#      </div>#}
+{#    </section>#}
+{##}
+{#    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>#}
+{#    <script src="{% static 'js/popper.min.js' %}"></script>#}
+{#    <script src="{% static 'bootstrap.min.js' %}"></script>#}
+{#    <script src="{% static 'js/main.js' %}"></script>#}
+{#    <script src="{% static 'js/pace.min.js' %}"></script>#}
+{##}
+{#    <script type="text/javascript">#}
+{#      $('.login-content [data-toggle="flip"]').click(function() {#}
+{#      	$('.login-box').toggleClass('flipped');#}
+{#      	return false;#}
+{#      });#}
+{#    </script>#}
+{#  </body>#}
+{#</html>#}

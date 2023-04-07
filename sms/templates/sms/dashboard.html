@@ -1,0 +1,83 @@
+{% extends 'layouts/new_base.html' %}
+{% load static %}
+
+{% block additional_meta %}
+
+{% endblock %}
+
+{% block additional_styles %}
+
+{% endblock %}
+
+{% block content %}
+    {% comment %} <div class="col-md-12"> {% endcomment %}
+       {% comment %} <div class="tile"> {% endcomment %}
+{#           <div class="page-header">#}
+{#               <div class="row">#}
+                   {% comment %} <div class="tile-title"> {% endcomment %}
+
+                   {% comment %} </div> {% endcomment %}
+{#               </div>#}
+{#           </div>#}
+    <div class="row">
+    <div class="col-sm-12">
+        <h3>Campaigns</h3>
+        <hr>
+    </div>
+    </div>
+       <div class="row">
+           <div class="col-lg-4">
+           <div class="bs-component">
+           <div class="card" style="-webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 10%); box-shadow: 0 1px 2px rgb(0 0 0 / 10%);">
+               <div class="card-header">
+                   <h5 class="mb-3" id="buttons">Simple Message</h5>
+               </div>
+               <div class="card-body">
+                   <p></p>
+                   <a class="btn btn-primary" href="{% url 'sms:simple_sms' %}">Continue</a>
+               </div>
+           </div>
+           </div>
+       </div>
+
+       <div class="col-lg-4">
+           <div class="card" style="-webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 10%); box-shadow: 0 1px 2px rgb(0 0 0 / 10%);">
+               <div class="bs-component">
+                   <div class="card-header">
+                   <h5 class="mb-3" id="buttons">Personalized Messages</h5>
+                   </div>
+               <div class="card-body">
+                   <p></p>
+                   <a class="btn btn-primary" href="{% url 'sms:personalized_sms_menu' %}">Continue</a>
+               </div>
+               </div>
+           </div>
+       </div>
+
+       <div class="col-lg-4">
+           <div class="card" style="-webkit-box-shadow: 0 1px 2px rgb(0 0 0 / 10%); box-shadow: 0 1px 2px rgb(0 0 0 / 10%);">
+               <div class="bs-component">
+                   <div class="card-header">
+                   <h5 class="mb-3" id="buttons">Schedule Messages</h5>
+                   </div>
+               <div class="card-body">
+                   <p></p>
+                   <a class="btn btn-primary" href="{%  url 'scheduled_sms:schedule_sms_dashboard' %}">Continue</a>
+               </div>
+               </div>
+           </div>
+       </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+
+    </div>
+       {% comment %} </div> {% endcomment %}
+       {% comment %} </div> {% endcomment %}
+{% endblock %}
+
+{% block additional_scripts %}
+
+{% endblock %}
